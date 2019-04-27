@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './components/Header';
-import { Container } from 'native-base';
+import { Container, ScrollView } from 'native-base';
 import Footer from './components/Footer';
+import Textbox from './components/Textbox';
 
 const mapState = state => ({
   ShowMonitor: state.tabs.ShowMonitor,
@@ -13,13 +14,9 @@ function Shell(props) {
   return (
     <Container style={{ flex: 1 }}>
       <Header content={'PeerNote'} />
-      <Container
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      />
+      <ScrollView>
+        {props.ShowMonitor && <Textbox word={'Keyword Input'} />}
+      </ScrollView>
       <Footer />
     </Container>
   );
