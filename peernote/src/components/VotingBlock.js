@@ -30,23 +30,31 @@ export default function VotingBlock({ records, submitKeyword }) {
 
   return (
     <View style={{ marginTop: 60 }}>
-      {/* <View style={{ flexDirection: 'row' }}>
-        <Icon name="google" size={30} color="#ccc" style={{ marginLeft: 60 }} />
-        <Icon
-          name="windows"
-          size={30}
-          color="#ccc"
-          style={{ marginLeft: 20 }}
-        />
-      </View> */}
       <View style={{ marginBottom: 60, flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'flex-start' }}>
-          <Icon
-            name={name_one}
-            size={30}
-            color="#ccc"
-            style={{ marginLeft: 60 }}
-          />
+          {parseInt(records[0].transType === 3) ? (
+            <View style={{ flexDirection: 'row' }}>
+              <Icon
+                name="google"
+                size={30}
+                color="#ccc"
+                style={{ marginLeft: 60 }}
+              />
+              <Icon
+                name="windows"
+                size={30}
+                color="#ccc"
+                style={{ marginLeft: 20 }}
+              />
+            </View>
+          ) : (
+            <Icon
+              name={name_one}
+              size={30}
+              color="#ccc"
+              style={{ marginLeft: 60 }}
+            />
+          )}
           <View
             style={{
               flexDirection: 'row',
@@ -89,12 +97,29 @@ export default function VotingBlock({ records, submitKeyword }) {
       {records[1] && (
         <View style={{ marginBottom: 60, flexDirection: 'row' }}>
           <View style={{ flex: 1, justifyContent: 'flex-start' }}>
-            <Icon
-              name={name_two}
-              size={30}
-              color="#ccc"
-              style={{ marginLeft: 60 }}
-            />
+            {parseInt(records[0].transType === 3) ? (
+              <View style={{ flexDirection: 'row' }}>
+                <Icon
+                  name="google"
+                  size={30}
+                  color="#ccc"
+                  style={{ marginLeft: 60 }}
+                />
+                <Icon
+                  name="windows"
+                  size={30}
+                  color="#ccc"
+                  style={{ marginLeft: 20 }}
+                />
+              </View>
+            ) : (
+              <Icon
+                name={name_two}
+                size={30}
+                color="#ccc"
+                style={{ marginLeft: 60 }}
+              />
+            )}
             <View
               style={{
                 flexDirection: 'row',
@@ -138,12 +163,29 @@ export default function VotingBlock({ records, submitKeyword }) {
       {records[2] && (
         <View style={{ marginBottom: 60, flexDirection: 'row' }}>
           <View style={{ flex: 1, justifyContent: 'flex-start' }}>
-            <Icon
-              name={name_three}
-              size={30}
-              color="#ccc"
-              style={{ marginLeft: 60 }}
-            />
+            {parseInt(records[0].transType === 3) ? (
+              <View style={{ flexDirection: 'row' }}>
+                <Icon
+                  name="google"
+                  size={30}
+                  color="#ccc"
+                  style={{ marginLeft: 60 }}
+                />
+                <Icon
+                  name="windows"
+                  size={30}
+                  color="#ccc"
+                  style={{ marginLeft: 20 }}
+                />
+              </View>
+            ) : (
+              <Icon
+                name={name_three}
+                size={30}
+                color="#ccc"
+                style={{ marginLeft: 60 }}
+              />
+            )}
             <View
               style={{
                 flexDirection: 'row',
