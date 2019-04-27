@@ -49,10 +49,6 @@ class First(Resource):
         else:
             records.downvotes = records.downvotes + 1
         db.session.commit()
-        return 200
-        # i
-        # records.
-        # records = Record.query.filter_by(text=text).all()
 
 
 @api.route('/getTranslation')
@@ -87,16 +83,6 @@ class Second(Resource):
                 'downvotes': record.downvotes,
                 'trans': record.trans,
             } for record in records]},200
-    
-    
-    # def patch(self):
-    #     return 200     
-        # print("record",record)
-        # print(text)
-        # parser = reqparse.RequestParser()
-        # parser.add_argument('q')
-        # args = parser.parse_args()
-        # return transObj.text, 200
 
 
 if __name__ == '__main__':
