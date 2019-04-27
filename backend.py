@@ -36,7 +36,7 @@ def getGoogleTrans(text):
 
 @api.route('/vote')
 class First(Resource):
-    @api.doc(body=api.model("payload", {
+    @api.doc(body=api.model("vote", {
         "id":fields.Integer(description="the rating identifier",required=True), 
         "updown":fields.Boolean(description="downvote:0 upvote:1",required=True)}))
     def post(self):
@@ -56,8 +56,8 @@ class First(Resource):
 
 
 @api.route('/getTranslation')
-class First(Resource):
-    @api.doc(body=api.model("payload", {"text":fields.String(description="translation text",required=True)}))
+class Second(Resource):
+    @api.doc(body=api.model("gettrans", {"text":fields.String(description="translation text",required=True)}))
     # @api.doc(responses={200: 'Success'})
     def post(self):
         payload = request.get_json()
@@ -65,7 +65,7 @@ class First(Resource):
         records = Record.query.filter_by(text=text).all()
         if not records:
             trans = getGoogleTrans(text)
-            record = Record(text=text, transType=lookup['google'],rank=0, trans=trans)
+            record = Record(text=text, transType=lookup['google'],upvotes=0, downvotes=0, trans=trans)
             db.session.add(record)
             db.session.commit()
             return {
@@ -73,7 +73,8 @@ class First(Resource):
                 'id': record.id,
                 'text': record.text, 
                 'transType': record.transType,
-                'rank': record.rank,
+                'upvotes': record.upvotes,
+                'downvotes': record.downvotes,
                 'trans': record.trans,
             }]}, 200
         else:
@@ -82,7 +83,8 @@ class First(Resource):
                 'id': record.id,
                 'text': record.text, 
                 'transType': record.transType,
-                'rank': record.rank,
+                'upvotes': record.upvotes,
+                'downvotes': record.downvotes,
                 'trans': record.trans,
             } for record in records]},200
     
