@@ -21,7 +21,16 @@ class Record(db.Model):
     rank = db.Column(db.String(120), unique=True, nullable=False)
     trans = db.Column(db.String(255), nullable=False)
 
+lookup = { 
+    'google':1,
+    'microsoft':2,
+    'user':3,
+}
 
+def getGoogleTrans(text):
+    translator = Translator()
+    transObj = translator.translate(text)
+    return transObj.text
 
 @api.route('/getTranslation')
 class First(Resource):
@@ -30,17 +39,37 @@ class First(Resource):
     def post(self):
         payload = request.get_json()
         text = payload["text"]
-        translator = Translator()
-        transObj = translator.translate(text)
         records = Record.query.filter_by(text=text).all()
         if not records:
-
-        print("record",record)
+            trans = getGoogleTrans(text)
+            record = Record(text=text, transType=lookup['google'],rank=0, trans=trans)
+            db.session.add(record)
+            db.session.commit()
+            return {
+            "records":[{
+                'id': record.id,
+                'text': record.text, 
+                'transType': record.transType,
+                'rank': record.rank,
+                'trans': record.trans,
+            }]}, 200
+        else:
+            return {
+            "records":[{
+                'id': record.id,
+                'text': record.text, 
+                'transType': record.transType,
+                'rank': record.rank,
+                'trans': record.trans,
+            } for record in records]},200
+    def patch(self):
+        return 200     
+        # print("record",record)
         # print(text)
         # parser = reqparse.RequestParser()
         # parser.add_argument('q')
         # args = parser.parse_args()
-        return transObj.text, 200
+        # return transObj.text, 200
 
 
 if __name__ == '__main__':
