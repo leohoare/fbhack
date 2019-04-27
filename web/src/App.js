@@ -1,12 +1,14 @@
 import React from 'react';
+import Layover from './components/layover'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <Layover/>
+      {/* <header className="App-header">
        hello 
-      </header>
+      </header> */}
     </div>
   );
 }
