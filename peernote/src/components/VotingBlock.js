@@ -24,9 +24,9 @@ export default function VotingBlock({ records, submitKeyword }) {
     if (type === 4) return 'users';
   };
 
-  const name_one = getIconName(records[0].transType);
-  const name_two = getIconName(records[1].transType);
-  const name_three = getIconName(records[2].transType);
+  const name_one = records[0] ? getIconName(records[0].transType) : '';
+  const name_two = records[1] ? getIconName(records[1].transType) : '';
+  const name_three = records[2] ? getIconName(records[2].transType) : '';
 
   return (
     <View style={{ marginTop: 60 }}>
@@ -86,53 +86,55 @@ export default function VotingBlock({ records, submitKeyword }) {
           <Text style={{ marginTop: 30 }}>{records[0].trans}</Text>
         </View>
       </View>
-      <View style={{ marginBottom: 60, flexDirection: 'row' }}>
-        <View style={{ flex: 1, justifyContent: 'flex-start' }}>
-          <Icon
-            name={name_two}
-            size={30}
-            color="#ccc"
-            style={{ marginLeft: 60 }}
-          />
+      {records[1] && (
+        <View style={{ marginBottom: 60, flexDirection: 'row' }}>
+          <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+            <Icon
+              name={name_two}
+              size={30}
+              color="#ccc"
+              style={{ marginLeft: 60 }}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 15,
+                flex: 1,
+                justifyContent: 'flex-start'
+              }}
+            >
+              <Icon
+                name="thumbs-up"
+                size={22}
+                color="#ccc"
+                style={{ marginLeft: 30 }}
+                onPress={() => changeVote(records[1].id, true)}
+              />
+              <Icon
+                name="thumbs-down"
+                size={22}
+                color="#ccc"
+                style={{ marginLeft: 43 }}
+                onPress={() => changeVote(records[1].id, false)}
+              />
+            </View>
+            <View style={{ flexDirection: 'row', marginTop: 15 }}>
+              <Text style={{ marginLeft: 30 }}> {records[1].upvotes} </Text>
+              <Text style={{ marginLeft: 50 }}> {records[1].downvotes} </Text>
+            </View>
+          </View>
           <View
             style={{
               flexDirection: 'row',
-              marginTop: 15,
               flex: 1,
-              justifyContent: 'flex-start'
+              justifyContent: 'flex-end',
+              marginRight: 50
             }}
           >
-            <Icon
-              name="thumbs-up"
-              size={22}
-              color="#ccc"
-              style={{ marginLeft: 30 }}
-              onPress={() => changeVote(records[1].id, true)}
-            />
-            <Icon
-              name="thumbs-down"
-              size={22}
-              color="#ccc"
-              style={{ marginLeft: 43 }}
-              onPress={() => changeVote(records[1].id, false)}
-            />
-          </View>
-          <View style={{ flexDirection: 'row', marginTop: 15 }}>
-            <Text style={{ marginLeft: 30 }}> {records[1].upvotes} </Text>
-            <Text style={{ marginLeft: 50 }}> {records[1].downvotes} </Text>
+            <Text style={{ marginTop: 30 }}>{records[1].trans}</Text>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            justifyContent: 'flex-end',
-            marginRight: 50
-          }}
-        >
-          <Text style={{ marginTop: 30 }}>{records[1].trans}</Text>
-        </View>
-      </View>
+      )}
       {records[2] && (
         <View style={{ marginBottom: 60, flexDirection: 'row' }}>
           <View style={{ flex: 1, justifyContent: 'flex-start' }}>
