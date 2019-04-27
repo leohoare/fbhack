@@ -114,9 +114,9 @@ class Second(Resource):
                 db.session.add(record)
                 records.append(record)
             else:
-                record1 = Record(text=text, transType=lookup['both'],upvotes=0, downvotes=0, trans=trans[0])
+                record1 = Record(text=text, transType=lookup['google'],upvotes=0, downvotes=0, trans=trans[0])
                 db.session.add(record1)
-                record2 = Record(text=text, transType=lookup['both'],upvotes=0, downvotes=0, trans=trans[1])
+                record2 = Record(text=text, transType=lookup['microsoft'],upvotes=0, downvotes=0, trans=trans[1])
                 db.session.add(record2)
                 records = [record1, record2]
             db.session.commit()
@@ -150,7 +150,7 @@ class Third(Resource):
         payload = request.get_json()
         text = payload["text"]
         trans = payload["trans"]
-        db.session.add(Record(text=text, transType=lookup['both'],upvotes=0, downvotes=0, trans=trans))
+        db.session.add(Record(text=text, transType=lookup['user'],upvotes=0, downvotes=0, trans=trans))
         db.session.commit()
         return 200
 
