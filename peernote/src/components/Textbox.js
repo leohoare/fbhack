@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Content, Input, Item, Text, Button, Container } from 'native-base';
 import axios from 'axios';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import VotingBlock from './VotingBlock';
 
 export default class RegularTextboxExample extends Component {
@@ -32,46 +32,50 @@ export default class RegularTextboxExample extends Component {
 
   render() {
     return (
-      <Container
-        style={{
-          display: 'flex',
-          marginTop: 30
-        }}
-      >
-        <Content>
-          <Item regular>
-            <Text> {this.props.word} </Text>
-            <Input
-              placeholder="Enter your keyword"
-              onChangeText={this.changeKeyWord}
-              value={this.state.keyword}
-            />
-          </Item>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20
-            }}
-          >
-            <Button
-              bordered
-              success
+      <>
+        <Container
+          style={{
+            display: 'flex',
+            marginTop: 30
+          }}
+        >
+          <Content>
+            <Item regular>
+              <Text> {this.props.word} </Text>
+              <Input
+                placeholder="Enter your keyword"
+                onChangeText={this.changeKeyWord}
+                value={this.state.keyword}
+              />
+            </Item>
+            <View
               style={{
-                marginRight: 50
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20
               }}
-              onPress={this.submitKeyword}
             >
-              <Text> Submit </Text>
-            </Button>
-            <Button bordered danger onPress={this.clearKeyword}>
-              <Text> Clear </Text>
-            </Button>
-          </View>
+              <Button
+                bordered
+                success
+                style={{
+                  marginRight: 50
+                }}
+                onPress={this.submitKeyword}
+              >
+                <Text> Submit </Text>
+              </Button>
+              <Button bordered danger onPress={this.clearKeyword}>
+                <Text> Clear </Text>
+              </Button>
+            </View>
+          </Content>
+        </Container>
+        <ScrollView>
           <VotingBlock />
-        </Content>
-      </Container>
+        </ScrollView>
+      </>
     );
   }
 }
