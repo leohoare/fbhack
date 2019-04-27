@@ -9,7 +9,8 @@ import os
 app = Flask(__name__)
 api = Api(app, title='API', description='peer note API', default="Actions",  default_label=None)
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir, 'database')
+app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -18,7 +19,8 @@ class Record(db.Model):
     # hash = db.Column(db.H)
     text = db.Column(db.String(255), nullable = False)
     transType = db.Column(db.Integer, nullable = False)
-    rank = db.Column(db.String(120), unique=True, nullable=False)
+    upvotes = db.Column(db.Integer, nullable=False)
+    downvotes = db.Column(db.Integer, nullable=False)
     trans = db.Column(db.String(255), nullable=False)
 
 lookup = { 
