@@ -9,7 +9,7 @@ import os
 app = Flask(__name__)
 api = Api(app, title='API', description='peer note API', default="Actions",  default_label=None)
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir, 'database/database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -33,6 +33,27 @@ def getGoogleTrans(text):
     translator = Translator()
     transObj = translator.translate(text)
     return transObj.text
+
+@api.route('/vote')
+class First(Resource):
+    @api.doc(body=api.model("payload", {
+        "id":fields.Integer(description="the rating identifier",required=True), 
+        "updown":fields.Boolean(description="downvote:0 upvote:1",required=True)}))
+    def post(self):
+        payload = request.get_json()
+        ident = payload["id"]
+        updown = payload["updown"]
+        records = Record.query.filter_by(id=ident).first()
+        if updown == True:
+            records.upvotes = records.upvotes + 1 
+        else:
+            records.downvotes = records.downvotes + 1
+        db.session.commit()
+        return 200
+        # i
+        # records.
+        # records = Record.query.filter_by(text=text).all()
+
 
 @api.route('/getTranslation')
 class First(Resource):
@@ -64,8 +85,10 @@ class First(Resource):
                 'rank': record.rank,
                 'trans': record.trans,
             } for record in records]},200
-    def patch(self):
-        return 200     
+    
+    
+    # def patch(self):
+    #     return 200     
         # print("record",record)
         # print(text)
         # parser = reqparse.RequestParser()
