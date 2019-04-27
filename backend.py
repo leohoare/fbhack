@@ -35,7 +35,15 @@ lookup = {
     'microsoft':2,
     'both':3,
     'user':4,
+    'default':5,
 }
+
+# def getDefaultTrans(text, results):
+#     # microsoft for now 
+#     body = [{ 'text' : text }]
+#     request= requests.post(micUrl, headers=headers, json=body)
+#     response = request.json()
+#     return response[0]["translations"][0]['text']
 
 def getGoogleTrans(text,results):
     translator = Translator()
@@ -70,6 +78,8 @@ class First(Resource):
     def post(self):
         payload = request.get_json()
         ident = payload["id"]
+        if ident == None:
+            return 404
         updown = payload["updown"]
         switch = payload["switch"]
         record = Record.query.filter_by(id=ident).first()
@@ -93,6 +103,8 @@ class Second(Resource):
     def post(self):
         payload = request.get_json()
         text = payload["text"]
+        if len(text) > 255:
+            return 500
         records = Record.query.filter_by(text=text).order_by(Record.upvotes.desc()).all()
         if not records:
             trans = getTrans(text)
@@ -101,7 +113,6 @@ class Second(Resource):
                 record = Record(text=text, transType=lookup['both'],upvotes=0, downvotes=0, trans=trans[0])
                 db.session.add(record)
                 records.append(record)
-                
             else:
                 record1 = Record(text=text, transType=lookup['both'],upvotes=0, downvotes=0, trans=trans[0])
                 db.session.add(record1)
@@ -119,6 +130,7 @@ class Second(Resource):
                 'trans': record.trans,
             } for record in records]}, 200
         else:
+            records = records[:5]
             return {
             "records":[{
                 'id': record.id,
