@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Content, Input, Item, Text, Button, Container } from 'native-base';
 import axios from 'axios';
 import { View, ScrollView } from 'react-native';
+import { isEmpty } from 'lodash';
 import VotingBlock from './VotingBlock';
 
 export default class RegularTextboxExample extends Component {
@@ -15,19 +16,21 @@ export default class RegularTextboxExample extends Component {
 
   changeKeyWord = val => {
     this.setState({ keyword: val });
+    this.props.changeKeyWord(val);
   };
 
   submitKeyword = () => {
+    console.log(this.state.keyword);
     axios
       .post('http://127.0.0.1:5000/getTranslation', {
         text: this.state.keyword
       })
-      // .then(response => console.log(response.data));
-      .then(response => this.setState({ data: response.data }));
+      .then(response => this.setState({ data: response.data.records }));
   };
 
   clearKeyword = () => {
     this.setState({ keyword: '' });
+    this.props.changeKeyWord('');
   };
 
   render() {
@@ -73,7 +76,12 @@ export default class RegularTextboxExample extends Component {
           </Content>
         </Container>
         <ScrollView>
-          <VotingBlock />
+          {!isEmpty(this.state.data) && (
+            <VotingBlock
+              records={this.state.data}
+              submitKeyword={this.submitKeyword}
+            />
+          )}
         </ScrollView>
       </>
     );

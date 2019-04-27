@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Footer, FooterTab, Button, Text } from 'native-base';
 import Dialog from 'react-native-dialog';
+import axios from 'axios';
 
 class FooterBar extends Component {
   constructor(props) {
@@ -18,10 +19,16 @@ class FooterBar extends Component {
   };
 
   submitComment = () => {
-    // TODO
+    axios
+      .post('http://127.0.0.1:5000/addTranslation', {
+        text: this.props.keyword,
+        trans: this.state.val
+      })
+      .then(response => console.log(response.data));
+    this.toggleDialog();
   };
 
-  changeComment = val => this.setState({ value: val });
+  changeComment = val => this.setState({ val: val });
 
   render() {
     const { isCommenting } = this.state;
