@@ -24,7 +24,7 @@ class Record(db.Model):
 headers  = {
     'Ocp-Apim-Subscription-Key': 'a344f69c533c424aa253865eec14f3fe', 
     'Content-type': 'application/json', 
-    'X-ClientTraceId': '830601f0-4717-4030-a661-11ff80096ca7'
+    'X-ClientTraceId': ''
 }
 
 micUrl = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en'
