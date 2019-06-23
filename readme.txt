@@ -6,3 +6,6 @@ The backend essentially calls multiple translation API's, or users can store the
 These translations can then be upvoted and downvoted and ranked.
 
 The react-native app shows a basic display, of what a potential user experience could be.
+
+
+Edit: We came third place! 😁
